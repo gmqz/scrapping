@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <title>Scrapping test - NodeJs</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <link rel="stylesheet" href="./fonts/font-awesome/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="./js/plugins/toastr.min.css" type="text/css">
+
+        <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+        <style>
+            body{
+                padding: 0;
+                margin: 0;
+                font-family: monospace;
+                overflow: hidden;
+                background: #333;
+                color: #FFF;
+            }
+            .toolsContent{
+                position: absolute;
+                left: 5px;
+                bottom: 5px;
+                font-weight: bold;
+                color: #ff5363;
+            }
+            .toolsContent>div{
+                float: left;
+                margin-left: 20px;
+            }
+            h1 button{
+                margin-top: -10px;
+                margin-right:10px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="container">
+			<div class="container-fluid">
+                <h1>
+                    <i class="fa fa-cogs"></i> Scrapping test.
+                    <button class="btn btn-danger pull-right" onclick="$.Default.disabled()"><i class="fa fa-power-off"></i><br>Power</button>
+                    <button class="btn btn-success pull-right" onclick="$.Default.disabled()"><i class="fa fa-pie-chart"></i><br>Stats</button>
+                    <button class="btn btn-info pull-right" onclick="$.Default.checkSites();"><i class="fa fa-refresh"></i><br>Refresh</button>
+                </h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>Site</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">QueryTime</th>
+                            <th class="text-center">Data</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center"><i class="fa fa-refresh fa-spin fa-lg fa-fw"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="toolsContent">
+                    <div>
+                        <i class="fa fa-globe" aria-hidden="true" title="Sites"></i> <span id="countSites">0</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-history" aria-hidden="true" title="History"></i> <span id="">0</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-usd" aria-hidden="true" title="Dollar"></i> <span id="">0</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-eur" aria-hidden="true" title="Euro"></i> <span id="">0</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-times-circle" aria-hidden="true" title="Site error"></i> <span id="countSitesError">0</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true" title="Data error"></i> <span id="countDataError">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./js/plugins/jquery.min.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/socket.io.js"></script>
+        <script src="./js/main.js"></script>
+        <script src="./js/io.js"></script>
+        <script src="./js/plugins/toastr.min.js"></script>
+        <script>
+            $.Default.init();
+            $.get('./sites').done((data)=>{
+                console.log(data);
+                if (data.length){
+                    $('#countSites').html(data.length);
+                    $('tbody tr').remove();
+                    $.map(data,(item) => {
+                        $('tbody').append('<tr><td class="text-center">'+ item.id +'</td><td>'+item.url+'</td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td></tr>')
+                    });
+                    toastr.success('Load '+ data.length +' sites.', 'Testing...', {timeOut: 5000});
+                    $.Default.checkSites();
+                }else{
+                    $('tbody td').html("Nothing to show");
+                }
+            })
+        </script>
+    </body>
+</html>
