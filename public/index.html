@@ -101,7 +101,7 @@
                     $.map(data,(item) => {
                         $('tbody').append('<tr><td class="text-center">'+ item.id +'</td><td>'+item.url+'</td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td></tr>')
                     });
-                    toastr.success('Load '+ data.length +' sites.', 'Testing...', {timeOut: 5000});
+                    toastr.success(data.length +' sites loaded.', 'Testing...', {timeOut: 5000});
                     $.Default.checkSites();
                 }else{
                     $('tbody td').html("Nothing to show");

@@ -96,9 +96,9 @@ module.exports = function(io,app,request,cheerio) {
 	            info: [],
 	            queryTime: ""
 	        };
-		json.date = new Date();
         json.site = site.url;
         request(site.url, (error, response, html)=>{
+			json.date = new Date();
             if(!error) {
                 var $ = cheerio.load(html);
                 json.status = 'success';

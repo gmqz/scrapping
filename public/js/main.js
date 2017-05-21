@@ -39,7 +39,6 @@
                 $(this).children().eq(1).css('text-decoration','line-through');
                 $(this).children().slice(2,6).html('<i class="fa fa-times-circle-o text-danger"></i>');
             });
-            console.log($(this).children().eq(0).text());
         });
     }
 })(jQuery);
